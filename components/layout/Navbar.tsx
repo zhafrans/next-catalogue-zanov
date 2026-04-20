@@ -31,18 +31,18 @@ export default function Navbar() {
 
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/" className="text-sm font-medium hover:text-secondary transition-colors">Beranda</Link>
-              <Link href="/catalogue" className="text-sm font-medium text-secondary">Katalog</Link>
               <Link href="/#about" className="text-sm font-medium hover:text-secondary transition-colors">Tentang</Link>
+              <Link href="/catalogue" className="text-sm font-medium text-secondary">Katalog</Link>
             </div>
 
             <div className="flex items-center space-x-4">
               <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                 <Search className="w-5 h-5" />
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
+              {/* <button className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
                 <ShoppingBag className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-              </button>
+              </button> */}
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"

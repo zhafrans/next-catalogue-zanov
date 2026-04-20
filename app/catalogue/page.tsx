@@ -4,17 +4,10 @@ import { useState, useMemo } from "react"
 import { products } from "@/lib/data"
 import ProductCard from "@/components/catalogue/ProductCard"
 import FilterSidebar from "@/components/catalogue/FilterSidebar"
-import { Filter, ChevronDown } from "lucide-react"
+import { Filter } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import type { Filters, SortOption } from "@/types/product"
+import type { Filters } from "@/types/product"
 
 export default function CataloguePage() {
   const [filters, setFilters] = useState<Filters>({
@@ -24,10 +17,9 @@ export default function CataloguePage() {
     material: 'all'
   })
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [sortBy, setSortBy] = useState<SortOption>('featured')
 
   const filteredProducts = useMemo(() => {
-    const filtered = products.filter(product => {
+    return products.filter(product => {
       const matchSearch = product.name.toLowerCase().includes(filters.search.toLowerCase()) ||
                          product.category.toLowerCase().includes(filters.search.toLowerCase())
       const matchGender = filters.gender === 'all' || product.gender === filters.gender
@@ -36,18 +28,7 @@ export default function CataloguePage() {
       
       return matchSearch && matchGender && matchCategory && matchMaterial
     })
-
-    switch (sortBy) {
-      case 'price-low':
-        return [...filtered].sort((a, b) => a.price - b.price)
-      case 'price-high':
-        return [...filtered].sort((a, b) => b.price - a.price)
-      case 'rating':
-        return [...filtered].sort((a, b) => b.rating - a.rating)
-      default:
-        return filtered
-    }
-  }, [filters, sortBy])
+  }, [filters])
 
   const activeFiltersCount = Object.entries(filters).filter(([key, value]) => 
     key !== 'search' && value !== 'all'
@@ -75,23 +56,21 @@ export default function CataloguePage() {
               <Button 
                 variant="outline"
                 onClick={() => setIsSidebarOpen(true)}
-                className="lg:hidden"
+                className="lg:hidden h-10"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filter {activeFiltersCount > 0 && `(${activeFiltersCount})`}
               </Button>
               
-              <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-                <SelectTrigger className="w-[200px]">
-                  <SelectValue placeholder="Urutkan" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="featured">Unggulan</SelectItem>
-                  <SelectItem value="price-low">Harga: Rendah ke Tinggi</SelectItem>
-                  <SelectItem value="price-high">Harga: Tinggi ke Rendah</SelectItem>
-                  <SelectItem value="rating">Rating Tertinggi</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Cari produk..."
+                  value={filters.search}
+                  onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                  className="w-full md:w-[300px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-secondary transition-colors"
+                />
+              </div>
             </div>
           </div>
 
