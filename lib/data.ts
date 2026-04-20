@@ -9,10 +9,10 @@ export const products: Product[] = [
     category: "formal",
     material: "leather",
     price: 1250000,
-    image: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=1200&h=1200&fit=crop",
     rating: 4.9,
     stock: 15,
-    description: "Sepatu formal premium dengan bahan kulit berkualitas tinggi"
+    description: "Sepatu formal premium dengan bahan kulit berkualitas tinggi dari Italia. Dirancang untuk kenyamanan maksimal dan tampilan elegan di setiap acara formal."
   },
   {
     id: 2,
@@ -22,10 +22,10 @@ export const products: Product[] = [
     category: "casual",
     material: "suede",
     price: 980000,
-    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=1200&h=1200&fit=crop",
     rating: 4.8,
     stock: 8,
-    description: "Loafer casual dengan bahan suede yang nyaman"
+    description: "Loafer casual dengan bahan suede premium yang nyaman dipakai seharian. Cocok untuk gaya kasual yang tetap berkelas."
   },
   {
     id: 3,
@@ -35,10 +35,10 @@ export const products: Product[] = [
     category: "casual",
     material: "canvas",
     price: 750000,
-    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&h=1200&fit=crop",
     rating: 4.7,
     stock: 20,
-    description: "Sneakers putih minimalis untuk gaya sehari-hari"
+    description: "Sneakers putih minimalis yang timeless. Desain sederhana namun elegan, cocok untuk berbagai gaya berpakaian."
   },
   {
     id: 4,
@@ -48,10 +48,10 @@ export const products: Product[] = [
     category: "formal",
     material: "leather",
     price: 1100000,
-    image: "https://images.unsplash.com/photo-1614894075660-25b2d9b5b724?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1614894075660-25b2d9b5b724?w=1200&h=1200&fit=crop",
     rating: 4.9,
     stock: 12,
-    description: "Sepatu Derby klasik warna coklat"
+    description: "Sepatu Derby klasik warna coklat dengan sistem open lacing. Memberikan kesan yang lebih santai namun tetap formal."
   },
   {
     id: 5,
@@ -61,10 +61,10 @@ export const products: Product[] = [
     category: "formal",
     material: "leather",
     price: 850000,
-    image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=1200&h=1200&fit=crop",
     rating: 4.6,
     stock: 18,
-    description: "Flat shoes elegan untuk acara formal"
+    description: "Flat shoes elegan dengan warna nude yang netral. Sangat nyaman untuk acara formal seharian."
   },
   {
     id: 6,
@@ -74,10 +74,10 @@ export const products: Product[] = [
     category: "boots",
     material: "leather",
     price: 1450000,
-    image: "https://images.unsplash.com/photo-1638247025967-b4e38b787b76?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1638247025967-b4e38b787b76?w=1200&h=1200&fit=crop",
     rating: 4.9,
     stock: 6,
-    description: "Chelsea boots hitam timeless"
+    description: "Chelsea boots hitam dengan elastic side panel. Mudah dipakai dan cocok untuk gaya modern."
   },
   {
     id: 7,
@@ -87,10 +87,10 @@ export const products: Product[] = [
     category: "casual",
     material: "canvas",
     price: 650000,
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1200&h=1200&fit=crop",
     rating: 4.5,
     stock: 25,
-    description: "Sneakers abu-abu casual"
+    description: "Sneakers abu-abu casual dengan bahan canvas breathable. Ringan dan nyaman untuk aktivitas sehari-hari."
   },
   {
     id: 8,
@@ -100,10 +100,10 @@ export const products: Product[] = [
     category: "formal",
     material: "leather",
     price: 1200000,
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&h=1200&fit=crop",
     rating: 4.8,
     stock: 10,
-    description: "High heels klasik untuk acara formal"
+    description: "High heels klasik dengan hak stabil. Desain timeless yang selalu menjadi pilihan untuk acara-acara spesial."
   },
   {
     id: 9,
@@ -113,10 +113,10 @@ export const products: Product[] = [
     category: "boots",
     material: "suede",
     price: 1350000,
-    image: "https://images.unsplash.com/photo-1638247025967-b4e38b787b76?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=1200&h=1200&fit=crop",
     rating: 4.7,
     stock: 9,
-    description: "Desert boots dari bahan suede"
+    description: "Desert boots ikonik dari bahan suede dengan sol karet. Kombinasi sempurna antara gaya dan kenyamanan."
   },
   {
     id: 10,
@@ -126,10 +126,10 @@ export const products: Product[] = [
     category: "casual",
     material: "synthetic",
     price: 450000,
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1200&h=1200&fit=crop",
     rating: 4.3,
     stock: 30,
-    description: "Slip-on casual yang praktis"
+    description: "Slip-on casual yang praktis dan stylish. Mudah dipakai dan cocok untuk daily wear."
   },
   {
     id: 11,
@@ -139,10 +139,10 @@ export const products: Product[] = [
     category: "formal",
     material: "leather",
     price: 1400000,
-    image: "https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=1200&h=1200&fit=crop",
     rating: 4.9,
     stock: 7,
-    description: "Monk strap double buckle untuk tampilan eksklusif"
+    description: "Monk strap double buckle yang eksklusif. Desain unik untuk tampilan yang berbeda dari yang lain."
   },
   {
     id: 12,
@@ -152,10 +152,10 @@ export const products: Product[] = [
     category: "boots",
     material: "leather",
     price: 1300000,
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=800&fit=crop",
+    image: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=1200&h=1200&fit=crop",
     rating: 4.8,
     stock: 11,
-    description: "Ankle boots kulit yang fashionable"
+    description: "Ankle boots kulit dengan hak rendah. Stylish dan nyaman untuk berbagai kesempatan."
   }
 ]
 
