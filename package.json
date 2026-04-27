@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:reset": "npx tsx src/reset-db.ts",
+    "db:push": "npx drizzle-kit push",
+    "db:seed": "npx tsx src/seed.ts",
+    "db:fresh": "npm run db:reset && npm run db:push && npm run db:seed"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.41.1",

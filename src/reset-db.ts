@@ -7,10 +7,12 @@ async function resetDatabase() {
   try {
     console.log('Dropping all tables...');
 
-    // Drop specific tables
-    const tables = ['users', 'products', 'users_table'];
-    
-    for (const tableName of tables) {
+    // Get all table names using SHOW TABLES
+    const [rows] = await connection.query('SHOW TABLES') as any[];
+
+    // Drop each table
+    for (const row of rows) {
+      const tableName = Object.values(row)[0] as string;
       await connection.query(`DROP TABLE IF EXISTS \`${tableName}\``);
       console.log(`Dropped table: ${tableName}`);
     }
