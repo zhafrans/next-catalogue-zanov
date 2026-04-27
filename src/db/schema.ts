@@ -15,4 +15,5 @@ export const productsTable = mysqlTable('products', {
   material: varchar({ length: 100 }).notNull(),
   cashPrice: int().notNull(),
   creditPrice: int().notNull(),
+  image: varchar({ length: 255 }).notNull(),
 });
