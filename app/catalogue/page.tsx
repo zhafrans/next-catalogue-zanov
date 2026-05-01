@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { products } from "@/lib/data"
+import { useState, useEffect, useCallback } from "react"
+import { useDebounce } from "@/hooks/useDebounce"
 import ProductCard from "@/components/catalogue/ProductCard"
 import FilterSidebar from "@/components/catalogue/FilterSidebar"
 import { Filter } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import type { Filters } from "@/types/product"
+import type { Filters, Product } from "@/types/product"
 
 export default function CataloguePage() {
   const [filters, setFilters] = useState<Filters>({
@@ -17,18 +17,39 @@ export default function CataloguePage() {
     material: 'all'
   })
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      const matchSearch = product.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-                         product.category.toLowerCase().includes(filters.search.toLowerCase())
-      const matchGender = filters.gender === 'all' || product.gender === filters.gender
-      const matchCategory = filters.category === 'all' || product.category === filters.category
-      const matchMaterial = filters.material === 'all' || product.material === filters.material
-      
-      return matchSearch && matchGender && matchCategory && matchMaterial
-    })
-  }, [filters])
+  const debouncedSearch = useDebounce(filters.search, 300)
+  const debouncedGender = useDebounce(filters.gender, 150)
+  const debouncedCategory = useDebounce(filters.category, 150)
+  const debouncedMaterial = useDebounce(filters.material, 150)
+
+  const fetchProducts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams()
+      if (debouncedSearch) params.set('search', debouncedSearch)
+      if (debouncedGender !== 'all') params.set('gender', debouncedGender)
+      if (debouncedCategory !== 'all') params.set('category', debouncedCategory)
+      if (debouncedMaterial !== 'all') params.set('material', debouncedMaterial)
+
+      const response = await fetch(`/api/products?${params.toString()}`)
+      const data = await response.json()
+      setProducts(data.products || [])
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      setProducts([])
+    } finally {
+      setLoading(false)
+    }
+  }, [debouncedSearch, debouncedGender, debouncedCategory, debouncedMaterial])
+
+  useEffect(() => {
+    void (async () => {
+      await fetchProducts()
+    })()
+  }, [fetchProducts])
 
   const activeFiltersCount = Object.entries(filters).filter(([key, value]) => 
     key !== 'search' && value !== 'all'
@@ -47,7 +68,7 @@ export default function CataloguePage() {
             <div>
               <h1 className="font-serif text-3xl font-bold mb-1">Katalog ZANOV</h1>
               <p className="text-muted-foreground text-sm">
-                {filteredProducts.length} produk ditemukan
+                {products.length} produk ditemukan
                 {activeFiltersCount > 0 && ` • ${activeFiltersCount} filter aktif`}
               </p>
             </div>
@@ -123,7 +144,12 @@ export default function CataloguePage() {
             onClose={() => setIsSidebarOpen(false)}
           />
 
-          {filteredProducts.length === 0 ? (
+          {loading ? (
+            <div className="flex-1 text-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-4">Memuat produk...</p>
+            </div>
+          ) : products.length === 0 ? (
             <div className="flex-1 text-center py-20">
               <h3 className="font-serif text-xl font-semibold mb-2">Tidak ada produk ditemukan</h3>
               <p className="text-muted-foreground mb-6">Coba ubah filter atau kata kunci pencarian</p>
@@ -137,7 +163,7 @@ export default function CataloguePage() {
             </div>
           ) : (
             <div className="flex-1 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map(product => (
+              {products.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

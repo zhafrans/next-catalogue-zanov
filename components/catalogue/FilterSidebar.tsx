@@ -1,12 +1,17 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { X, RotateCcw } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { categories, genders, materials } from "@/lib/data"
 import { Filters } from "@/types/product"
 import { Button } from "@/components/ui/button"
+
+interface FilterOption {
+  value: string
+  label: string
+}
 
 interface FilterSidebarProps {
   filters: Filters
@@ -16,6 +21,25 @@ interface FilterSidebarProps {
 }
 
 export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: FilterSidebarProps) {
+  const [genders, setGenders] = useState<FilterOption[]>([{ value: 'all', label: 'Semua' }])
+  const [categories, setCategories] = useState<FilterOption[]>([{ value: 'all', label: 'Semua Kategori' }])
+  const [materials, setMaterials] = useState<FilterOption[]>([{ value: 'all', label: 'Semua Bahan' }])
+
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        const response = await fetch('/api/filters')
+        const data = await response.json()
+        if (data.genders) setGenders(data.genders)
+        if (data.categories) setCategories(data.categories)
+        if (data.materials) setMaterials(data.materials)
+      } catch (error) {
+        console.error('Error fetching filters:', error)
+      }
+    }
+    fetchFilters()
+  }, [])
+
   const updateFilter = (key: keyof Filters, value: string) => {
     setFilters({ ...filters, [key]: value })
   }
@@ -67,7 +91,7 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
             <Label className="text-sm font-semibold uppercase tracking-wider text-muted">
               Gender
             </Label>
-            <RadioGroup 
+            <RadioGroup
               value={filters.gender}
               onValueChange={(value) => updateFilter('gender', value)}
               className="space-y-2"
@@ -75,7 +99,10 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
               {genders.map(g => (
                 <div key={g.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={g.value} id={`gender-${g.value}`} />
-                  <Label htmlFor={`gender-${g.value}`} className="cursor-pointer">
+                  <Label
+                    htmlFor={`gender-${g.value}`}
+                    className={`cursor-pointer transition-colors ${filters.gender === g.value ? 'text-primary font-semibold' : ''}`}
+                  >
                     {g.label}
                   </Label>
                 </div>
@@ -88,7 +115,7 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
             <Label className="text-sm font-semibold uppercase tracking-wider text-muted">
               Kategori
             </Label>
-            <RadioGroup 
+            <RadioGroup
               value={filters.category}
               onValueChange={(value) => updateFilter('category', value)}
               className="space-y-2"
@@ -96,7 +123,10 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
               {categories.map(c => (
                 <div key={c.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={c.value} id={`category-${c.value}`} />
-                  <Label htmlFor={`category-${c.value}`} className="cursor-pointer capitalize">
+                  <Label
+                    htmlFor={`category-${c.value}`}
+                    className={`cursor-pointer capitalize transition-colors ${filters.category === c.value ? 'text-primary font-semibold' : ''}`}
+                  >
                     {c.label}
                   </Label>
                 </div>
@@ -109,7 +139,7 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
             <Label className="text-sm font-semibold uppercase tracking-wider text-muted">
               Bahan
             </Label>
-            <RadioGroup 
+            <RadioGroup
               value={filters.material}
               onValueChange={(value) => updateFilter('material', value)}
               className="space-y-2"
@@ -117,7 +147,10 @@ export default function FilterSidebar({ filters, setFilters, isOpen, onClose }: 
               {materials.map(m => (
                 <div key={m.value} className="flex items-center space-x-2">
                   <RadioGroupItem value={m.value} id={`material-${m.value}`} />
-                  <Label htmlFor={`material-${m.value}`} className="cursor-pointer capitalize">
+                  <Label
+                    htmlFor={`material-${m.value}`}
+                    className={`cursor-pointer capitalize transition-colors ${filters.material === m.value ? 'text-primary font-semibold' : ''}`}
+                  >
                     {m.label}
                   </Label>
                 </div>
