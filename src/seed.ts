@@ -1,7 +1,9 @@
 import { userSeeder } from './seeder/userSeeder';
 import { productSeeder } from './seeder/productSeeder';
+import { seedAdmin } from './seeder/admin';
 
 export async function seed() {
+  await seedAdmin();
   await userSeeder();
   await productSeeder();
 }

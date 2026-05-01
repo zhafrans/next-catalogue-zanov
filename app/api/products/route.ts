@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { productsTable } from '@/src/db/schema';
 import { like, and, eq, or } from 'drizzle-orm';
+import { getSessionFromRequest } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -59,6 +60,44 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching products:', error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },
+      { status: 500 }
+    );
+  }
+}
+
+// POST - Create new product (admin only)
+export async function POST(request: NextRequest) {
+  try {
+    const session = await getSessionFromRequest(request);
+    if (!session || session.role !== 'admin') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { name, category, gender, material, cashPrice, creditPrice, image } = body;
+
+    if (!name || !category || !gender || !material || !cashPrice || !creditPrice) {
+      return NextResponse.json(
+        { error: 'Semua field wajib diisi' },
+        { status: 400 }
+      );
+    }
+
+    const result = await db.insert(productsTable).values({
+      name,
+      category,
+      gender,
+      material,
+      cashPrice: parseInt(cashPrice),
+      creditPrice: parseInt(creditPrice),
+      image: image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&h=1200&fit=crop',
+    });
+
+    return NextResponse.json({ success: true, id: Number(result[0].insertId) });
+  } catch (error) {
+    console.error('Error creating product:', error);
+    return NextResponse.json(
+      { error: 'Failed to create product' },
       { status: 500 }
     );
   }
